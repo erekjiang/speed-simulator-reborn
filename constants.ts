@@ -30,6 +30,7 @@ export const WORLDS = [
   { id: 1, name: "The Hub", req: 0, spawn: { x: -50, y: 500 }, color: "text-green-500", desc: "Safe zone" },
   { id: 3, name: "Magma Obby", req: 0, spawn: { x: 50, y: 500 }, color: "text-red-500", desc: "Harder & Longer!" },
   { id: 2, name: "Cyber World", req: 100000, spawn: { x: 50, y: 500 }, color: "text-cyan-500", desc: "Expert Jumping" },
+  { id: 5, name: "Atlantis", req: 250000, spawn: { x: 50, y: 500 }, color: "text-blue-500", desc: "Underwater Parkour" },
   { id: 4, name: "The Void", req: 5000000, spawn: { x: 0, y: 500 }, color: "text-purple-500", desc: "God Tier Only" },
 ];
 
@@ -165,6 +166,7 @@ export const AVAILABLE_PETS: Pet[] = [
   { id: 'dragon', name: 'Inferno Dragon', multiplier: 25, rarity: PetRarity.EPIC, cost: 25000, description: "Breaths fire and speed." },
   { id: 'void', name: 'Void Walker', multiplier: 100, rarity: PetRarity.LEGENDARY, cost: 150000, description: "Existence is merely a suggestion." },
   { id: 'god', name: 'Galaxy God', multiplier: 500, rarity: PetRarity.LEGENDARY, cost: 5000000, description: "Creates universes." },
+  { id: 'shark', name: 'Mecha Shark', multiplier: 800, rarity: PetRarity.LEGENDARY, cost: 8000000, description: "King of the ocean." },
 ];
 
 export const AVAILABLE_SKINS: Skin[] = [
@@ -193,7 +195,11 @@ export const ENEMIES: EnemyDef[] = [
   // World 1: Hub
   { id: 'slime1', name: 'Slime', x: -300, y: 550, width: 40, height: 30, maxHp: 100, damage: 5, reward: 500, rewardType: 'speed', world: 1, color: '#84cc16' },
   { id: 'slime2', name: 'Slime', x: 300, y: 550, width: 40, height: 30, maxHp: 100, damage: 5, reward: 500, rewardType: 'speed', world: 1, color: '#84cc16' },
+  { id: 'goblin1', name: 'Goblin', x: -1200, y: 540, width: 35, height: 45, maxHp: 300, damage: 15, reward: 1500, rewardType: 'attack', world: 1, color: '#166534' },
+  { id: 'goblin2', name: 'Goblin', x: -1400, y: 540, width: 35, height: 45, maxHp: 300, damage: 15, reward: 1500, rewardType: 'attack', world: 1, color: '#166534' },
+  { id: 'orc1', name: 'Orc', x: -1700, y: 520, width: 60, height: 60, maxHp: 1000, damage: 30, reward: 5000, rewardType: 'health', world: 1, color: '#064e3b' },
   { id: 'boss1', name: 'KING SLIME', x: -600, y: 500, width: 120, height: 100, maxHp: 5000, damage: 20, reward: 25000, rewardType: 'random', petDropChance: 0.2, world: 1, color: '#3f6212', isBoss: true },
+  { id: 'boss_hub_2', name: 'IRON GOLEM', x: -2000, y: 480, width: 100, height: 120, maxHp: 15000, damage: 50, reward: 50000, rewardType: 'thorn', petDropChance: 0.25, world: 1, color: '#9ca3af', isBoss: true },
 
   // World 3: Magma (Gives Health and Attack)
   { id: 'golem1', name: 'Magma Cube', x: 920, y: 450, width: 50, height: 50, maxHp: 2000, damage: 25, reward: 500, rewardType: 'health', world: 3, color: '#ea580c' },
@@ -204,6 +210,11 @@ export const ENEMIES: EnemyDef[] = [
   { id: 'drone1', name: 'Security Bot', x: 510, y: 500, width: 40, height: 40, maxHp: 5000, damage: 40, reward: 1000, rewardType: 'jump', world: 2, color: '#0ea5e9' },
   { id: 'drone2', name: 'Security Bot', x: 1310, y: 200, width: 40, height: 40, maxHp: 5000, damage: 40, reward: 1000, rewardType: 'jump', world: 2, color: '#0ea5e9' },
   { id: 'boss2', name: 'MECH TANK', x: 2100, y: 50, width: 150, height: 80, maxHp: 200000, damage: 80, reward: 50000, rewardType: 'jump', petDropChance: 0.3, world: 2, color: '#1e1b4b', isBoss: true },
+  
+  // World 5: Atlantis (Gives Speed & Pets)
+  { id: 'crab1', name: 'Crab', x: 400, y: 500, width: 40, height: 30, maxHp: 50000, damage: 100, reward: 50000, rewardType: 'speed', world: 5, color: '#ef4444' },
+  { id: 'crab2', name: 'Crab', x: 1000, y: 400, width: 40, height: 30, maxHp: 50000, damage: 100, reward: 50000, rewardType: 'speed', world: 5, color: '#ef4444' },
+  { id: 'shark_boss', name: 'MEGALODON', x: 2000, y: 200, width: 200, height: 100, maxHp: 5000000, damage: 500, reward: 1000000, rewardType: 'random', petDropChance: 0.4, world: 5, color: '#1e40af', isBoss: true },
 
   // World 4: The Void (SCALED UP TO 100 TRILLION) - Gives Everything
   { id: 'void1', name: 'Void Crawler', x: 600, y: 500, width: 60, height: 60, maxHp: 10000000000, damage: 5000, reward: 100000, rewardType: 'random', world: 4, color: '#6b21a8' }, 
@@ -215,18 +226,24 @@ export const ENEMIES: EnemyDef[] = [
 
 // World 1: The Hub
 const HUB_PLATFORMS: Platform[] = [
-  // Main Floor
-  { x: -1000, y: 600, width: 2000, height: 100, color: '#4ade80', world: 1, type: 'ground' },
+  // Expanded Main Floor (-2500 to 1500)
+  { x: -2500, y: 600, width: 4000, height: 100, color: '#4ade80', world: 1, type: 'ground' },
   
-  // Left Side: Magma Portal Area
+  // Monster Arena (Far Left)
+  { x: -2500, y: 550, width: 800, height: 50, color: '#3f6212', world: 1, type: 'ground' }, // Darker grass for arena
+
+  // Portals
   { x: -900, y: 500, width: 200, height: 20, color: '#7f1d1d', world: 1, type: 'ground' },
   { x: -950, y: 400, width: 20, height: 100, color: '#ef4444', world: 1, type: 'portal', portalReq: 0, portalName: "Magma Obby", portalTarget: { world: 3, x: 50, y: 500 } },
 
-  // Right Side: Cyber Portal Area
   { x: 700, y: 500, width: 200, height: 20, color: '#1e3a8a', world: 1, type: 'ground' },
   { x: 850, y: 400, width: 20, height: 100, color: '#3b82f6', world: 1, type: 'portal', portalReq: 100000, portalName: "Cyber World", portalTarget: { world: 2, x: 50, y: 500 } },
+  
+  // New Atlantis Portal (Far Right)
+  { x: 1300, y: 500, width: 200, height: 20, color: '#0e7490', world: 1, type: 'ground' },
+  { x: 1450, y: 400, width: 20, height: 100, color: '#22d3ee', world: 1, type: 'portal', portalReq: 250000, portalName: "Atlantis", portalTarget: { world: 5, x: 50, y: 500 } },
 
-  // Center Parkour
+  // Center Parkour (Safe Zone)
   { x: -100, y: 450, width: 200, height: 20, color: '#fbbf24', world: 1, type: 'ground' },
   { x: -50, y: 350, width: 100, height: 20, color: '#fbbf24', world: 1, type: 'ground' },
   { x: -25, y: 250, width: 50, height: 20, color: '#fbbf24', world: 1, type: 'ground' },
@@ -234,6 +251,11 @@ const HUB_PLATFORMS: Platform[] = [
   // Void Portal (Sky)
   { x: -250, y: 100, width: 500, height: 20, color: '#581c87', world: 1, type: 'ground' },
   { x: -50, y: 0, width: 100, height: 100, color: '#3b0764', world: 1, type: 'portal', portalReq: 5000000, portalName: "THE VOID", portalTarget: { world: 4, x: 0, y: 500 } },
+  
+  // Floating Treasure Islands (Parkour Chain to the Right)
+  { x: 200, y: 200, width: 100, height: 20, color: '#fcd34d', world: 1, type: 'ground' },
+  { x: 400, y: 150, width: 80, height: 20, color: '#fcd34d', world: 1, type: 'ground' },
+  { x: 600, y: 100, width: 60, height: 20, color: '#fcd34d', world: 1, type: 'ground' }, // Treasure Chest here
 ];
 
 // World 2: Cyber Space (Harder, Longer, Checkpoints)
@@ -309,7 +331,22 @@ const WORLD_4_PLATFORMS: Platform[] = [
    { x: 2000, y: 500, width: 1000, height: 50, color: '#000000', world: 4, type: 'ground' },
 ];
 
-export const ALL_PLATFORMS = [...HUB_PLATFORMS, ...WORLD_2_PLATFORMS, ...WORLD_3_PLATFORMS, ...WORLD_4_PLATFORMS];
+// World 5: Atlantis
+const WORLD_5_PLATFORMS: Platform[] = [
+    { x: 0, y: 600, width: 500, height: 50, color: '#1e3a8a', world: 5, type: 'ground' },
+    // Coral Reefs
+    { x: 600, y: 550, width: 100, height: 20, color: '#f472b6', world: 5, type: 'ground' },
+    { x: 800, y: 450, width: 100, height: 20, color: '#f472b6', world: 5, type: 'ground' },
+    { x: 1000, y: 350, width: 100, height: 20, color: '#f472b6', world: 5, type: 'ground' },
+    // Deep Sea
+    { x: 1300, y: 500, width: 1000, height: 20, color: '#1e40af', world: 5, type: 'hazard' }, // Water hazard
+    { x: 1400, y: 400, width: 60, height: 20, color: '#06b6d4', world: 5, type: 'ground' },
+    { x: 1600, y: 300, width: 60, height: 20, color: '#06b6d4', world: 5, type: 'ground' },
+    // Boss Area
+    { x: 2000, y: 300, width: 500, height: 50, color: '#1e3a8a', world: 5, type: 'ground' },
+];
+
+export const ALL_PLATFORMS = [...HUB_PLATFORMS, ...WORLD_2_PLATFORMS, ...WORLD_3_PLATFORMS, ...WORLD_4_PLATFORMS, ...WORLD_5_PLATFORMS];
 
 // --- COLLECTIBLES ---
 
@@ -318,7 +355,8 @@ export const ALL_COLLECTIBLES: Collectible[] = [
   { id: 'hub_1', x: -300, y: 550, radius: 15, value: 100, color: '#fde047', world: 1 },
   { id: 'hub_2', x: 300, y: 550, radius: 15, value: 100, color: '#fde047', world: 1 },
   { id: 'hub_top', x: -25, y: 200, radius: 20, value: 1000, color: '#8b5cf6', world: 1 }, 
-  
+  { id: 'hub_island_1', x: 630, y: 80, radius: 25, value: 5000, color: '#ec4899', world: 1 }, // High value cloud loot
+
   // Magma Collectibles
   { id: 'magma_1', x: 725, y: 450, radius: 15, value: 500, color: '#f87171', world: 3 },
   { id: 'magma_2', x: 1575, y: 350, radius: 15, value: 2000, color: '#f87171', world: 3 }, // Hard reach
@@ -329,4 +367,8 @@ export const ALL_COLLECTIBLES: Collectible[] = [
 
   // Void Collectibles
   { id: 'void_1', x: 800, y: 350, radius: 25, value: 100000, color: '#e879f9', world: 4 },
+  
+  // Atlantis Collectibles
+  { id: 'atlantis_1', x: 850, y: 400, radius: 20, value: 15000, color: '#22d3ee', world: 5 },
+  { id: 'atlantis_2', x: 1630, y: 250, radius: 20, value: 25000, color: '#22d3ee', world: 5 },
 ];

@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from 'react';
 import { PlayerState, Pet, PetRarity, PetMutation, Skin, QuestType } from './types';
 import { REBIRTH_COST_BASE, AVAILABLE_PETS, WORLDS, AVAILABLE_SKINS, MUTATION_CHANCES, MUTATION_MULTIPLIERS, CAMPAIGN_QUESTS } from './constants';
@@ -929,10 +928,10 @@ const App: React.FC = () => {
                         </div>
                         <div className="mt-6 border-t pt-4">
                             <h3 className="font-bold text-gray-700 mb-2">My Pets ({playerState.pets.length})</h3>
-                            <div className="flex gap-2 overflow-x-auto pb-2 min-h-[40px]">
+                            <div className="flex gap-2 flex-wrap pb-2 min-h-[40px]">
                                 {playerState.pets.length === 0 && <span className="text-gray-400 italic">No pets yet...</span>}
                                 {playerState.pets.map((p, idx) => (
-                                    <div key={idx} className={`px-3 py-1 rounded-lg text-sm font-bold whitespace-nowrap shadow-sm border-b-2 flex items-center gap-1
+                                    <div key={idx} className={`group relative px-3 py-1 rounded-lg text-sm font-bold whitespace-nowrap shadow-sm border-b-2 flex items-center gap-1 cursor-help
                                          ${(!p.mutation || p.mutation === 'Normal') ? 'bg-white border-gray-200 text-gray-700' : ''}
                                          ${p.mutation === 'Shiny' ? 'bg-blue-50 border-blue-200 text-blue-600' : ''}
                                          ${p.mutation === 'Gold' ? 'bg-yellow-50 border-yellow-300 text-yellow-700' : ''}
@@ -950,6 +949,21 @@ const App: React.FC = () => {
                                         {p.mutation === 'Dark Matter' && <Sparkles size={12}/>}
                                         {p.name} 
                                         <span className="text-xs opacity-75 ml-1">x{p.multiplier.toFixed(1)}</span>
+
+                                        {/* Tooltip */}
+                                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-900 text-white text-xs p-3 rounded-xl shadow-2xl z-50 w-48 text-center pointer-events-none border border-gray-700">
+                                            <div className="font-bold border-b border-gray-700 pb-1 mb-2 text-yellow-400">{p.name}</div>
+                                            <div className="grid grid-cols-1 gap-1 text-[11px]">
+                                                <div className="flex justify-between"><span>Base Mult:</span> <span className="font-mono">x{p.multiplier.toFixed(1)}</span></div>
+                                                {p.speedMult && p.speedMult > 0 ? <div className="flex justify-between text-blue-300"><span>Speed:</span> <span className="font-mono">+{p.speedMult.toFixed(1)}x</span></div> : null}
+                                                {p.jumpMult && p.jumpMult > 0 ? <div className="flex justify-between text-green-300"><span>Jump:</span> <span className="font-mono">+{p.jumpMult.toFixed(1)}x</span></div> : null}
+                                                {p.attackMult && p.attackMult > 0 ? <div className="flex justify-between text-red-300"><span>Attack:</span> <span className="font-mono">+{p.attackMult.toFixed(1)}x</span></div> : null}
+                                                {p.healthMult && p.healthMult > 0 ? <div className="flex justify-between text-pink-300"><span>Health:</span> <span className="font-mono">+{p.healthMult.toFixed(1)}x</span></div> : null}
+                                                {p.thornMult && p.thornMult > 0 ? <div className="flex justify-between text-emerald-300"><span>Thorn:</span> <span className="font-mono">+{p.thornMult.toFixed(1)}x</span></div> : null}
+                                                {!p.speedMult && !p.jumpMult && !p.attackMult && !p.healthMult && !p.thornMult && <div className="text-gray-500 italic mt-1">No special stats</div>}
+                                            </div>
+                                            <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-gray-900"></div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
